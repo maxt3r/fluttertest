@@ -3,9 +3,7 @@ import '../services/auth.dart';
 import 'webview.dart';
 
 class LoginScreen extends StatefulWidget {
-  final AuthManager authManager;
-
-  const LoginScreen({required this.authManager});
+  const LoginScreen();
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -44,8 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             '${_urlController.text}/user/login?needAuthToken=true')));
                 // Save the auth token and navigate to the main screen
                 if (token != null && token.isNotEmpty) {
-                  await widget.authManager.saveAuth(token, _urlController.text);
-                  // Navigator.of(context).pushReplacementNamed('/tickets');
+                  var authManager = AuthManager();
+                  await authManager.saveAuth(token, _urlController.text);
+                  Navigator.of(context).pushReplacementNamed('/tickets');
                 }
               },
             ),

@@ -31,6 +31,8 @@ class _TicketsState extends State<Tickets> {
         setState(() {
           this.tickets = tickets;
         });
+      } else {
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     }();
   }
@@ -44,6 +46,8 @@ class _TicketsState extends State<Tickets> {
     return Scaffold(
       drawer: SideMenu(),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
         title: Builder(builder: (context) {
           return InkWell(
               child: Center(child: Text('Support Tickets')),

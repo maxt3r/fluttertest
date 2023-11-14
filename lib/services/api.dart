@@ -3,6 +3,13 @@ import 'dart:convert';
 
 import 'package:support_ticket_app/services/ticket.dart';
 
+enum ViewMode {
+  all, // All tickets, including closed
+  unanswered, // New or updated by customer or for tech tickets
+  unclosed, // All active tickets
+  handledbyme // Tickets assigned to the user
+}
+
 class API {
   final String baseUri;
   final String token;

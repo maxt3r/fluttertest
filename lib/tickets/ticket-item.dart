@@ -11,7 +11,8 @@ class TicketItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ticket = tickets[index];
-    final relativeTime = timeago.format(DateTime.parse(ticket.issueDate));
+    final relativeTime =
+        timeago.format(DateTime.parse(ticket.issueDate), locale: 'en_short');
     return Container(
       decoration: BoxDecoration(
           border: Border(
@@ -19,11 +20,24 @@ class TicketItem extends StatelessWidget {
           color: getBadgeColor(ticket),
           width: 5.0,
         ),
+        bottom: BorderSide(
+          color: Theme.of(context).dividerColor,
+          width: 0.5,
+        ),
       )),
       child: ListTile(
-        title: Text(ticket.subject),
-        subtitle: Text('${ticket.category} - ${ticket.userName}'),
-        trailing: Text(relativeTime),
+        title: Text(
+          ticket.subject,
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+        ),
+        subtitle: Row(
+          // spacing: 5,
+          children: [
+            //Flexible(child: TicketChip(text: ticket.category)),
+            TicketChip(text: ticket.userName, time: relativeTime)
+          ],
+        ),
+        // trailing: Text(relativeTime),
       ),
     );
   }
@@ -48,5 +62,36 @@ class TicketItem extends StatelessWidget {
       return const Color(
           0xAA6b7280); // A default color if none of the conditions are met
     }
+  }
+}
+
+class TicketChip extends StatelessWidget {
+  const TicketChip({
+    super.key,
+    required this.text,
+    required this.time,
+  });
+
+  final String text;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+              flex: 2,
+              child: Text(text,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]))),
+          Flexible(
+              child: Text(
+            time,
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          ))
+        ],
+      ),
+    );
   }
 }
