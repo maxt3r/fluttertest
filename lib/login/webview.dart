@@ -22,11 +22,13 @@ class _WebViewContainerState extends State<WebViewContainer> {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageFinished: (String url) {
-            if (url.contains('User/Token?token=')) {
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.contains('User/Token?token=')) {
               // Save the auth token and navigate to the main screen
-              Navigator.pop(context, url.split('User/Token?token=')[1]);
+              Navigator.pop(context, request.url.split('User/Token?token=')[1]);
+              return NavigationDecision.prevent;
             }
+            return NavigationDecision.navigate;
           },
           onWebResourceError: (WebResourceError error) {},
         ),
